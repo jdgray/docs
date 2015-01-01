@@ -1,0 +1,112 @@
+EC2 Instance Install Guide
+By: Jonathon Gray (jonathon@thesnippetapp.com)
+Setup EC2 Instance
+Login into aws.amazon.com
+Navigate to the EC2 admin
+Click Launch Instance
+Choose the Quick Start Image - Amazon Linux AMI 2013.09.2 (64bit)
+Choose the Instance Type (micro/small for staging/dev, med/large for production)
+Click "Review and Launch"
+Click "Edit Security Group" under Security Group
+Select "Select an existing security group" and select "quick-start-1". This might to changed later to limit what IP's can access the staging site.
+Click "Review and Launch"
+Review the settings
+Click "Launch"
+Select "Choose an existing key pair"
+Select "www.thesnippetapp.com" - You will need to locate the key from one of your friendly dev guys.
+Click Launch Instance
+
+Setup Elastic IP:
+Navigate to the EC2 admin
+Select "Elastic IPs" under Network and Security
+Click "Allocate New Address"
+Select the newly created IP and click "Associate Address"
+Select the Instance field and select an instance 
+Click "Associate" - This is your new static IP. You will need to add this to your domain.
+
+Setup Subdomain
+Login into Namecheap
+Navigate to: Your Domains / Products -> thesnippetapp.com -> All Host Records
+Add sub domain entry (make sure its a A record)
+Point the new sub domain to 54.186.69.229 (staging) or 54.200.35.79 (production) - This is the elastic IP address.
+
+SSH into Instance
+http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Acc:q
+essingInstancesLinux.html
+
+Install LAMP (Linux + Apache + MySQL + PHP)
+http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/install-LAMP.html
+
+Install Libraries
+SSH into the Instance
+Run command: sudo yum install php-mbstring
+Run command: sudo yum install php-mcrypt
+
+Setup Apache
+Edit the conf file: /etc/httpd/conf/httpd.conf
+Check directory permissions
+This section will already be in the conf file.  Find the section and make sure it matches what is below.
+<Directory "/var/www/html">
+   Options Indexes FollowSymLinks
+   AllowOverride All
+   Order allow,deny
+   Allow from all
+</Directory>
+Add domain name
+ServerName www.example.com:80 
+Add virtual directory, if outside of html folder
+Example:
+<VirtualHost *:80>
+    ServerAdmin info@thesnippetapp.com
+    DocumentRoot /var/www/html
+    ServerName www.thesnippetapp.com
+    ServerAlias thesnippetapp.com
+    ErrorLog logs/www.thesnippetapp.com-error_log
+    CustomLog logs/www.thesnippetapp.com-access_log common
+</VirtualHost>
+
+Setup RDS
+Login into AWS
+Select "RDS"
+Select "Launch DB Instance"
+Select the MySQL instance
+Select either Free-tier on Multi-AZ Deployment (free-tier for dev)
+ Check settings and set size amount (5GB is fine for a dev environment) - http://screencast.com/t/ubVfQacy2v
+DB Instance Class: micro/small
+Multi-AZ Deployment: no (yes for production)
+Set username and password
+Click Next
+Add DB name
+Click next
+Review backup settings
+Click next
+Review and click "Launch DB Instance" - http://screencast.com/t/VqrF1o6JSC
+Once the instance is up and running, store the url, username and password.  You will need to add this information to the DB config file in the Kohana framework.
+
+Copy Website Files
+Clone production repo
+Zip up files and copy FTP to the virtual directory in your instance
+Unzip the files to the virtual directory you setup in Apache
+Check permissions: All upload directories need 765 permissions
+Update the bootstrap environment settings (/application/bootstrap.php).  Needs to be set to DEVELOPMENT for all non-production environments.
+Update the DB config file (/application/config/database.php).
+
+
+Setup Beanstalk 
+Click "Deployments"
+Add title, color, type and branch
+Save
+Click on "Settings"
+Click on "Settings" under server configuration (http://screencast.com/t/u3kKjWndyx)
+Add amazon settings
+Protocal: SFTP
+Port: 22
+Host: {Elastic IP}
+Remote path: /var/www/{virtual directory name}
+Login: ec2-user
+Password: Check "Use SSH Key for authentication"
+If you need the server key, click on "server"
+SSH into the instance
+Add the server key to the allowed keys on the EC2 instance: 
+vi ~/.ssh. 
+Copy the key to a new line.

@@ -1,0 +1,67 @@
+EC2 Nodejs install
+Setup EC2 instance
+Add elastic IP
+Update instance
+- sudo yum update
+Install node packages packages
+- sudo yum install nodejs npm --enablerepo=epel 
+Install Misc packages
+- sudo yum install git
+- sudo gem install sass
+Add website dir
+- sudo mkdir /var/www
+Setup permissions
+- sudo groupadd www
+- sudo usermod -a -G www ec2-user
+- sudo chown -R root:www /var/www
+- sudo chmod 2775 /var/www
+- find /var/www -type d -exec sudo chmod 2775 {} +
+- find /var/www -type f -exec sudo chmod 0664 {} +
+Setup port forwarding with nginx
+- sudo su -c 'rpm -Uvh http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm'
+- sudo yum install nginx
+- sudo /etc/init.d/nginx start
+Config Port Forwarding
+Route all traffic to port 80
+- sudo iptables -t nat -A PREROUTING -i eth0 -p tcp --dport 80 -j REDIRECT --to-port 3000
+
+- /etc/nginx/conf.d/virtual.conf
+- 
+# the IP(s) on which your node server is running. I chose port 3000.
+upstream app_yourdomain {
+    server 54.218.107.40:3000;
+}
+
+# the nginx server instance
+server {
+    listen 0.0.0.0:80;
+    server_name booklauch.io;
+    access_log /var/log/nginx/booklaunch.log;
+
+    # pass the request to the node.js server with the correct headers and much more can be added, see nginx config options
+    location / {
+      proxy_set_header X-Real-IP $remote_addr;
+      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+      proxy_set_header Host $http_host;
+      proxy_set_header X-NginX-Proxy true;
+
+      proxy_pass http://app_yourdomain/;
+      proxy_redirect off;
+    }
+ }
+- sudo /etc/init.d/nginx restart
+Keep it running
+- sudo npm install forever -g
+Install MongoDB - production
+- http://docs.mongodb.org/manual/tutorial/install-mongodb-on-red-hat-centos-o…
+- http://docs.mongodb.org/ecosystem/platforms/amazon-ec2/
+Install MongoDB - local/dev install
+- config file: /etc/mongod.conf
+- sudo mkdir /path/to/db
+- sudo chown mongod:mongod /path/to/db
+- sudo service mongod start or sudo mongod --dbpath /path/to/db
+Setup Key for Beanstalk
+- vi ~/.ssh/authorized_keys
+- add ssh key from beanstalk
+Start forever
+- forever start -e err.log -c "npm start" /var/www
