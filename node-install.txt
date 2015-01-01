@@ -29,7 +29,7 @@ Route all traffic to port 80
 - 
 # the IP(s) on which your node server is running. I chose port 3000.
 upstream app_yourdomain {
-    server 54.218.107.40:3000;
+    server 0.0.0.0:3000;
 }
 
 # the nginx server instance
