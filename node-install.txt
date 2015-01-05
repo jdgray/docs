@@ -27,6 +27,9 @@ Setup port forwarding with nginx
 - sudo yum install nginx
 - sudo /etc/init.d/nginx start
 
+Start nginx on boot
+- sudo chkconfig nginx on
+
 Config Port Forwarding
 Route all traffic to port 80
 Note: only needed if upstreaming in nginx
