@@ -1,0 +1,36 @@
+- login
+mongo -u admin -p thepassword --authenticationDatabase admin
+
+- login remote
+mongo -u admin -p thepassword  -host 0.0.0.0 -port 27017 --authenticationDatabase admin
+
+- create admin user
+1. mongo
+2. use admin
+3. db.createUser({user: '', pwd: '', roles: [ {role: 'root', db: 'admin'} ]});
+
+- create db user
+1. mongo
+2. use {db name}
+3. db.createUser({user: 'siteAdmin', pwd: '', roles: [ {role: 'readWrite', db: ''} ]}); 
+
+- add role to user
+1. mongo
+2. use {db name}
+3. db.grantRolesToUser('siteAdmin', [{role: 'readWrite', db: ''}])
+
+
+
+- helpful commands -
+
+- auth user
+db.auth('siteAdmin', '');
+
+- get user
+db.getUser("siteAdmin")
+
+- show list of users
+show users
+
+- show list of collections
+show collections
