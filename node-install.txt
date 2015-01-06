@@ -42,9 +42,15 @@ Note: only needed if upstreaming in nginx
 Keep it running by installing forever
 - sudo npm install forever -g
 
-Install MongoDB - production
-- http://docs.mongodb.org/manual/tutorial/install-mongodb-on-red-hat-centos-o…
+Setup MongoDB - production
+- http://docs.mongodb.org/manual/tutorial/install-mongodb-on-red-hat-centos-or-fedora-linux
+- Note: you can find your attach volume names by running: cat /proc/partitions
 - http://docs.mongodb.org/ecosystem/platforms/amazon-ec2/
+
+Start Mongo - production
+- Check mounts: df -H
+- Load on startup: sudo chkconfig mongod off
+- start: sudo service mongod start
 
 Install MongoDB - local/dev install
 - config file: /etc/mongod.conf
