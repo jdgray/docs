@@ -1,0 +1,10 @@
+#######################
+# Useful linux commands
+#######################
+
+
+
+# find node pid
+ps aux | grep node
+
+

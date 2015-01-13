@@ -64,3 +64,6 @@ Setup Key for Beanstalk
 
 Start forever
 - forever start -e err.log -c "npm start" /var/www
+
+Setup CLI tools
+- http://docs.aws.amazon.com/AWSEC2/latest/CommandLineReference/set-up-ec2-cli-linux.html
