@@ -7,4 +7,9 @@
 # find node pid
 ps aux | grep node
 
+# kill node process
+kill -9 PID
+
+#start forever
+forever start -e err.log -c "npm start" /var/www/
 
