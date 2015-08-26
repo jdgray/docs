@@ -1,0 +1,5 @@
+# install
+http://redis.io/topics/quickstart
+
+# start on run
+sudo ckconfig redis_6379 defaults
