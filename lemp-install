@@ -1,0 +1,64 @@
+https://www.digitalocean.com/community/tutorials/how-to-install-linux-nginx-mysql-php-lemp-stack-on-centos-6
+
+sudo yum install php-fpm php-mysql
+
+sudo vi /etc/php.ini
+cgi.fix_pathinfo=0
+
+#
+# The default server
+#
+server {
+    listen       80;
+    server_name example.com;
+
+   
+    location / {
+        root   /usr/share/nginx/html;
+        index index.php  index.html index.htm;
+    }
+
+    error_page  404              /404.html;
+    location = /404.html {
+        root   /usr/share/nginx/html;
+    }
+
+    error_page   500 502 503 504  /50x.html;
+    location = /50x.html {
+        root   /usr/share/nginx/html;
+    }
+
+    # pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000
+    #
+    location ~ \.php$ {
+        root           /usr/share/nginx/html;
+        fastcgi_pass   127.0.0.1:9000;
+        fastcgi_index  index.php;
+        fastcgi_param  SCRIPT_FILENAME   $document_root$fastcgi_script_name;
+        include        fastcgi_params;
+    }
+}
+
+
+sudo vi /etc/php-fpm.d/www.conf
+
+[...]
+; Unix user/group of processes
+; Note: The user is mandatory. If the group is not set, the default user's group
+;	will be used.
+; RPM: apache Choosed to be able to access some dir as httpd
+user = nginx
+; RPM: Keep a group allowed to write in log dir.
+group = nginx
+[...]
+
+sudo service php-fpm restart
+
+sudo vi /usr/share/nginx/html/info.php
+<?php
+phpinfo();
+?>
+
+sudo service nginx restart
+
+sudo chkconfig --levels 235 php-fpm on
