@@ -1,5 +1,7 @@
 # install
 http://redis.io/topics/quickstart
 
+https://gist.github.com/FUT/7db4608e4b8ee8423f31
+
 # start on run
 sudo chkconfig redis_6379 on
