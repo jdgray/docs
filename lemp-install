@@ -12,8 +12,13 @@ Setup permissions
 - find /var/www -type d -exec sudo chmod 2775 {} +
 - find /var/www -type f -exec sudo chmod 0664 {} +
 
+Install packages
 sudo yum install php php-fpm php-mysql
 
+Find ini file
+php --ini
+
+Fix fast cgi
 sudo vi /etc/php.ini
 cgi.fix_pathinfo=0
 
