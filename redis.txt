@@ -1,10 +1,13 @@
 # required packages
 sudo yum install gcc
 
-# install
+# docs
 http://redis.io/topics/quickstart
-
 https://gist.github.com/FUT/7db4608e4b8ee8423f31
+
+# if make errors, make sure the deps are install
+cd deps
+make hiredis jemalloc linenoise lua
 
 # start on run
 sudo chkconfig redis_6379 on
