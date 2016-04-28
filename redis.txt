@@ -1,5 +1,5 @@
 # required packages
-sudo yum install gcc
+sudo yum install gcc tcl
 
 # docs
 http://redis.io/topics/quickstart
