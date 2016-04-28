@@ -9,5 +9,17 @@ https://gist.github.com/FUT/7db4608e4b8ee8423f31
 cd deps
 make hiredis jemalloc linenoise lua
 
+# fix the chkconfig for redis
+# edit /etc/init.d/redis_6379 and add the following at the top:
+
+#!/bin/sh
+#
+# Simple Redis init.d script conceived to work on Linux systems
+# as it does use of the /proc filesystem.
+#
+# chkconfig:   - 85 15
+# description:  Redis is a persistent key-value database
+# processname: redis
+
 # start on run
 sudo chkconfig redis_6379 on
