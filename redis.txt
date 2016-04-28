@@ -1,3 +1,6 @@
+# required packages
+sudo yum install gcc
+
 # install
 http://redis.io/topics/quickstart
 
