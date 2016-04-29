@@ -23,7 +23,7 @@ sudo vi /etc/vsftpd/user_list
 
 #create ec2 user for ftp
 sudo adduser yomomma
-sudo passwd yomommapassword
+sudo passwd yomomma
 
 #restrict to home dir (/etc/vsftpd/vsftpd.conf)
 chroot_local_user=YES
