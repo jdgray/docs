@@ -1,1 +1,33 @@
 # ftp install on ec2 linux
+
+#install packages
+sudo yum install vsftpd
+
+#open port on aws security group
+Add two Custom TCP Rules with port ranges 20-21 and 1024-1048
+
+#update ftp config
+sudo vi /etc/vsftpd/vsftpd.conf
+
+anonymous_enable=NO
+pasv_enable=YES
+pasv_min_port=1024
+pasv_max_port=1048
+pasv_address=<Public IP of your instance> 
+
+#restart
+sudo /etc/init.d/vsftpd restart
+
+#view ftp users
+sudo vi /etc/vsftpd/user_list
+
+#create ec2 user for ftp
+sudo adduser yomomma
+sudo passwd yomommapassword
+
+#restrict to home dir (/etc/vsftpd/vsftpd.conf)
+chroot_local_user=YES
+
+#all done time to restart
+sudo /etc/init.d/vsftpd restart
+
