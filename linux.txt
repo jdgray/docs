@@ -13,3 +13,11 @@ kill -9 PID
 #start forever
 forever start -e err.log -c "npm start" /var/www/
 
+#list installed packages
+yum list installed | grep httpd
+
+#list available packages
+yum list available | grep httpd
+
+
+
