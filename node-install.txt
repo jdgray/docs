@@ -6,7 +6,8 @@ Add elastic IP
 Update instance
 - sudo yum update
 Install node packages packages
-- sudo yum install nodejs npm --enablerepo=epel 
+- curl -sL https://rpm.nodesource.com/setup_6.x | sudo -E bash -
+- sudo yum install nodejs 
 Install Misc packages
 - sudo yum install git
 - sudo gem install sass
