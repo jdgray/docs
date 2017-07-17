@@ -8,6 +8,8 @@ Update instance
 Install node packages packages
 - curl -sL https://rpm.nodesource.com/setup_6.x | sudo -E bash -
 - sudo yum install nodejs 
+Get latest npm
+- npm install npm@latest -g
 Install Misc packages
 - sudo yum install git
 - sudo gem install sass
