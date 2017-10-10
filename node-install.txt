@@ -8,6 +8,13 @@ Update instance
 Install node packages packages
 - curl -sL https://rpm.nodesource.com/setup_6.x | sudo -E bash -
 - sudo yum install nodejs 
+Install exact version
+- wget http://nodejs.org/dist/v6.11.1/node-v6.11.1.tar.gz
+- tar xzvf node-v* && cd node-v*
+- sudo yum install gcc gcc-c++
+- ./configure
+- make
+- sudo make install
 Get latest npm
 - npm install npm@latest -g
 Install Misc packages
