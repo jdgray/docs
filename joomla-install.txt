@@ -1,0 +1,13 @@
+Install
+- sudo yum install httpd
+- sudo yum install php php-mysql php-pdo php-gd php-mbstring
+
+Setup permissions
+- sudo groupadd www
+- sudo usermod -a -G www ec2-user
+- sudo chown -R root:www /var/www
+- sudo chmod 2775 /var/www
+- find /var/www -type d -exec sudo chmod 2775 {} +
+- find /var/www -type f -exec sudo chmod 0664 {} +
+
+Edit conf.d file
