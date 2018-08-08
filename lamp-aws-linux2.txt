@@ -1,0 +1,11 @@
+PHP 7
+https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-lamp-amazon-linux-2.html
+
+PHP 5
+sudo yum -y update
+sudo yum install –y https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+sudo wget https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+sudo wget https://centos7.iuscommunity.org/ius-release.rpm
+sudo rpm -Uvh ius-release*.rpm
+sudo yum -y update
+sudo yum -y install php56u php56u-opcache php56u-xml php56u-mcrypt php56u-gd php56u-devel php56u-mysql php56u-intl php56u-mbstring php56u-bcmath php56u-soap
